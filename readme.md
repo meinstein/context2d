@@ -1,6 +1,6 @@
 # Context2D
 
-> An ergonomic HTML canvas wrapper geared towards animating frames.
+> An ergonomic HTML canvas wrapper geared towards animation frames.
 
 ## Install
 
