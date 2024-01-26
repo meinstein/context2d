@@ -1,0 +1,18 @@
+{
+  "name": "context2d",
+  "version": "0.0.1",
+  "description": "> An ergonomic HTML canvas wrapper geared towards animating frames.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meinstein/context2d.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "publish": "npm publish"
+  },
+  "files": [
+    "index.js"
+  ],
+  "author": "meinstein",
+  "license": "MIT"
+}
