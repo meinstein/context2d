@@ -1,8 +1,8 @@
 export class Context2D {
-  constructor(arg = {}) {
-    this.width = arg.width || window.innerWidth;
-    this.height  = arg.height || window.innerHeight;
-    this.rootElement = arg.rootElement || document.body;
+  constructor(options = {}) {
+    this.width = options.width || window.innerWidth;
+    this.height  = options.height || window.innerHeight;
+    this.rootElement = options.rootElement || document.body;
     this.canvas = document.createElement('canvas');
     this.rootElement.appendChild(this.canvas)
     this.canvas.width = this.width;
