@@ -1,21 +1,15 @@
 export class Context2D {
-  constructor({
-    width = window.innerWidth,
-    height = window.innerHeight,
-    rootElement = document.querySelector('body'),
-    draw
-  }) {
-    this.draw = draw;
-    this.width = width;
-    this.height = height;
-    this.rootElement = rootElement;
+  constructor(arg = {}) {
+    this.width = arg.width || window.innerWidth;
+    this.height  = arg.height || window.innerHeight;
+    this.rootElement = arg.rootElement || document.body;
     this.canvas = document.createElement('canvas');
     this.rootElement.appendChild(this.canvas)
-    this.canvas.width = width;
-    this.canvas.height = height;
+    this.canvas.width = this.width;
+    this.canvas.height = this.height;
     this.ctx = this.canvas.getContext('2d');
-    this.animate = this.animate.bind(this);
-    this.cache = {};
+    this.draw = this.draw.bind(this);
+    this.cache = new Map();
 
     window.addEventListener('resize', () => {
       clearTimeout(this.resizeTimeout);
@@ -23,9 +17,6 @@ export class Context2D {
         this.#resizeCanvas();
       }, 250);
     });
-
-    // draw once on init
-    this.#draw();
   }
 
   #resizeCanvas() {
@@ -33,40 +24,41 @@ export class Context2D {
     this.height = window.innerHeight;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
-    // clear cache
-    this.cache = {};
-    this.#draw();
+    this.cache.clear();
+    this.draw();
   }
 
   #clearCanvas() {
     this.ctx.clearRect(0, 0, this.width, this.height);
   }
 
-  #memoize = (key, fn) => {
-    if (this.cache[key]) {
-      return () => this.cache[key];
+  #memoize = (fn, config = {}) => (...args) => {
+    const key = JSON.stringify(...args);
+    if (this.cache.has(key)) {
+      return this.cache.get(key);
     }
 
-    return (...args) => {
-      const result = fn(...args);
-      this.cache[key] = result;
-      return result;
-    }
+    const result = fn(...args);
+    this.cache.set(key, result);
+    return result;
   }
 
-  #draw() {
-    this.draw({
+  #oscillate({ amplitude, frequency, offset = 0 }) {
+    return Math.sin((Date.now() + offset) / frequency) * amplitude;
+  }
+
+  draw(cb) {
+    this.#clearCanvas();
+
+    cb({
       ctx: this.ctx,
       w: this.width,
       h: this.height,
-      memoize: this.#memoize
-    });
-  }
+      memoize: this.#memoize,
+      oscillate: this.#oscillate
+    })
 
-  animate() {
-    this.#clearCanvas();
-    this.#draw();
-    requestAnimationFrame(this.animate);
+    requestAnimationFrame(() => this.draw(cb));
   }
 }
 
