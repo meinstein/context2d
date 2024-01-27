@@ -25,7 +25,6 @@ export class Context2D {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.cache.clear();
-    this.draw();
   }
 
   #clearCanvas() {

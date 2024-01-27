@@ -78,9 +78,15 @@ type: `number`
 
 The canvas height.
 
+##### memoize(fn)
+
+type: `Function`
+
+Memoizes the provided fn. Re-runs fn when window is resized.
+
 ##### oscillate(options)
 
-type: `Functions`
+type: `Function`
 
 Returns a sine wave.
 
