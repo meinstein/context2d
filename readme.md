@@ -2,17 +2,11 @@
 
 > An ergonomic HTML canvas wrapper geared towards animation frames.
 
-## Install
-
-```
-npm install context2d
-```
-
 ## Usage
 
 ```html
 <script type="module">
-  import { Context2D } from 'context2d';
+  import { Context2D } from 'https://unpkg.com/context2d';
 
   const draw = ({ ctx, w, h, oscillate, memoize }) => {
     ...
