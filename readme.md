@@ -14,7 +14,7 @@ npm install context2d
 <script type="module">
   import { Context2D } from 'context2d';
 
-  const draw = ({ ctx, w, h, oscillate }) => {
+  const draw = ({ ctx, w, h, oscillate, memoize }) => {
     ...
   }
 
@@ -84,21 +84,27 @@ type: `Function`
 
 Memoizes the provided fn. Re-runs fn when window is resized.
 
-##### oscillate(options)
+##### oscillate(oscillateOptions)
 
 type: `Function`
 
 Returns a sine wave.
 
-#### options
+#### oscillateOptions
 
 type : `obect`
 
-##### amplitude
+##### min
 
 type: `number`
 
-The pixel distance from the top of the wave to the center.
+The min pixels that the oscillate fn will return. Default is -1.
+
+##### max
+
+type: `number`
+
+The max pixels that the oscillate fn will return. Default is -1.
 
 ##### frequency
 

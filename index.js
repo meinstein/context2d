@@ -42,8 +42,9 @@ export class Context2D {
     return result;
   }
 
-  #oscillate({ amplitude, frequency, offset = 0 }) {
-    return Math.sin((Date.now() + offset) / frequency) * amplitude;
+  #oscillate({ frequency, offset = 0, min = -1, max = 1}) {
+    const now = Date.now();
+    return Math.sin(now * frequency + offset) * (max - min) / 2 + (max + min) / 2;
   }
 
   draw(cb) {
