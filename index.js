@@ -1,27 +1,31 @@
 export class Context2D {
   constructor(options = {}) {
-    this.width = options.width || window.innerWidth;
-    this.height  = options.height || window.innerHeight;
     this.rootElement = options.rootElement || document.body;
     this.canvas = document.createElement('canvas');
     this.rootElement.appendChild(this.canvas)
+    this.width = options.width || this.rootElement.offsetWidth;
+    this.height  = options.height || this.rootElement.offsetHeight;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.ctx = this.canvas.getContext('2d');
     this.draw = this.draw.bind(this);
     this.cache = new Map();
+    this.resizeThrottle = options.resizeThrottle === 0 ? 0 : options.resizeThrottle || 250;
+    this.resizeOnWindowResize = options.resizeOnWindowResize === false ? false : true;
 
-    window.addEventListener('resize', () => {
-      clearTimeout(this.resizeTimeout);
-      this.resizeTimeout = setTimeout(() => {
-        this.#resizeCanvas();
-      }, 250);
-    });
+    if (this.resizeOnWindowResize) {
+      window.addEventListener('resize', () => {
+        clearTimeout(this.resizeTimeout);
+        this.resizeTimeout = setTimeout(() => {
+          this.#resizeCanvas();
+        }, this.resizeThrottle);
+      });
+    }
   }
 
   #resizeCanvas() {
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+    this.width = this.rootElement.offsetWidth;
+    this.height = this.rootElement.offsetHeight;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.cache.clear();
