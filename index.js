@@ -1,6 +1,6 @@
 export class Context2D {
   constructor(options = {}) {
-    this.rootElement = options.rootElement || document.body;
+    this.rootElement = options.rootElement instanceof HTMLElement ? options.rootElement : document.getElementById(options.rootElement) || document.body;
     this.canvas = document.createElement('canvas');
     this.rootElement.appendChild(this.canvas)
     this.width = options.width || this.rootElement.offsetWidth;
@@ -46,9 +46,17 @@ export class Context2D {
     return result;
   }
 
-  #oscillate({ frequency, offset = 0, min = -1, max = 1}) {
+  #oscillate({
+    // Speed is in Hz, so 1 is one cycle per second
+    speed = 1,
+    from = -1,
+    to = 1,
+    offset = 0
+  }) {
     const now = Date.now();
-    return Math.sin(now * frequency + offset) * (max - min) / 2 + (max + min) / 2;
+    // Convert speed to radians
+    const _speed = speed * 2 * Math.PI;
+    return Math.sin(_speed * now / 1000) * (to - from) / 2 + (to + from) / 2;
   }
 
   draw(cb) {

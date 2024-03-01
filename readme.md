@@ -30,23 +30,23 @@ Type: `object`
 ##### width
 
 Type: `number`
-Default: `window.innerWidth`
+Default: Root element's `offsetWidth`
 
 The canvas width.
 
 ##### height
 
 Type: `number`
-Default: `window.innerHeight`
+Default: Root element's `offsetHeight`
 
 The canvas height.
 
 ##### rootElement
 
-Type: `HTMLElement`
+Type: `string` | `HTMLElement`
 Default: `document.body`
 
-The element to which the canvas will be appended.
+The element or element ID to which the canvas will be appended.
 
 ### context2d.draw(param => void)
 
@@ -88,23 +88,23 @@ Returns a sine wave.
 
 type : `obect`
 
-##### min
+##### from
 
 type: `number`
 
-The min pixels that the oscillate fn will return. Default is -1.
+The from pixels that the oscillate fn will return. Default is -1.
 
-##### max
-
-type: `number`
-
-The max pixels that the oscillate fn will return. Default is -1.
-
-##### frequency
+##### to
 
 type: `number`
 
-The number of milliseconds for one waveform to complete.
+The to pixels that the oscillate fn will return. Default is -1.
+
+##### speed
+
+type: `number`
+
+Speed is in Hz, so 1 is one cycle per second.
 
 ##### offset
 
