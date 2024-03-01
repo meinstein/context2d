@@ -56,7 +56,7 @@ export class Context2D {
     const now = Date.now();
     // Convert speed to radians
     const _speed = speed * 2 * Math.PI;
-    return Math.sin(_speed * now / 1000) * (to - from) / 2 + (to + from) / 2;
+    return Math.sin(_speed * now / 1000 + offset) * (to - from) / 2 + (to + from) / 2;
   }
 
   draw(cb) {
