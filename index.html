@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add title here</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #fb0813;
+        height: 100dvh;
+      }
+
+      #root {
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import { Context2D } from './index.js';
+
+      const draw = ({ ctx, w, h, oscillate, memoize }) => {
+        // draw circle in the center of the screen
+        ctx.beginPath()
+
+        const ox = oscillate({
+          from: -100,
+          to: 100,
+          speed: 2,
+        })
+
+        const oy = oscillate({
+          from: -100,
+          to: 100,
+          speed: 1,
+        })
+
+        // draw a circle
+        ctx.arc(w / 2 + ox, h / 2 - oy, 100, 0, Math.PI * 2, false)
+
+        // fill the circle with a color
+        ctx.fillStyle = 'white'
+        ctx.fill()
+
+
+
+      }
+
+      const context2d = new Context2D({
+        rootElement: 'root',
+      })
+
+      context2d.draw(draw)
+    </script>
+  </body>
+
+</html>
